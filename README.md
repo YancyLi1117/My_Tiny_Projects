@@ -1,4 +1,4 @@
 # My_Tiny_Projects
 hello!
-this is a rookie programmer
-hope to make progress with you!
+this is a rookie programmer,
+hoping to make progress with you!
