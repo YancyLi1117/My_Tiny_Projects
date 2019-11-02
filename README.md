@@ -1,4 +1,5 @@
 # My_Tiny_Projects
 hello!
-this is a rookie programmer,
-hoping to make progress with you!
+i am a rookie programmer,
+this is my review of ML and DM,
+hope to make progress with you~
