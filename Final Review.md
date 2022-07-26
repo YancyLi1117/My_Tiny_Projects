@@ -22,7 +22,7 @@ Difference between AI,ML,DL:
 
 <img src="https://i.postimg.cc/pXBqvRTH/Snipaste-2022-05-10-18-02-10.png" alt="diff" style="zoom:50%;" />
 
-So data modelling
+So data modelling:
 
 <img src="https://i.postimg.cc/kgg41Fzm/Snipaste-2022-05-10-18-11-21.png" alt="2" style="zoom:50%;" />
 
@@ -38,34 +38,115 @@ So data modelling
 
   **Descriptive Analysis** is the type of analysis and measure that seek to **describe and summarize the data** and the available samples. We **can not in general use it for the interpretation of unobserved data.**
 
-we aim to find the function. 
+Pattern recognition: the assignment of some sort of output value (or label) to a given input value (or instance), according to some specific algorithm.
+
+Classification: the problem of **identifying to which of a set of categories a new observation belongs**, on the basis of a training set of data containing observations whose category membership is known.
 
 ## Linear Regression
 
-from cov to correlation- 2 definitions
+### covariance and correlation
+
+$$
+Cov=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline{X})(Y_i-\overline{Y})\\Cor(X,Y)=\frac{Cov(X,Y)}{S_X,S_Y}, -1\leq Cor(X,Y)\leq 1
+$$
+
+(Why cov denominator is n-1? [cov degree of freedom is n-1](https://www.zhihu.com/question/326157416/answer/698480209), [sample variance df is n-1](https://www.zhihu.com/question/20099757/answer/26586088))
 
 cor: only the measure of a **linear** relation. 
 
-cor near 0: non-linear relation but maybe have another relation (maybe square...)
+cor near 0: **non-linear relation but maybe have another relation** (maybe square...)
 
+### Maximum Likelihood Estimate (MLE)
 
+$$
+Y=Xw+\epsilon\quad \epsilon\sim N(0,\sigma^2I)\quad Y\sim N(Xw,\sigma^2)\\P(Y|Xw,\sigma^2I)=\frac{1}{(\sqrt{2\pi}\sigma^2)^n}\exp\{-\frac{1}{2\sigma^2}(Y-Xw)^{-1}(Y-Xw)\}
+$$
+
+$$
+w_{ML}=arg\max_w\ln P(Y|\mu=Xw,\sigma^2I)\\=arg\max_w-\frac{1}{2\sigma^2}||Y-Xw||^2-\frac{n}{2}\ln (2\pi\sigma^2)\\=arg\min_w||Y-Xw||^2
+$$
+
+$$
+L=||Y-Xw||^2=(y-Xw)^T(y-Xw)\\
+\nabla_wL=2X^TXw-2X^TY=0\Rightarrow w_{LS}=(X^TX)^{-1}X^TY
+$$
+
+If $(X^TX)^{-1}$is not full rank, doesn't have an Analytic expression. Use gradient descent.
+
+## Logistic Regression
+
+**A form of regression** allows the prediction of **discrete** variables by a mix of continuous and **discrete** predictors.
+
+Binary logistic regression is **a type of regression** analysis where the dependent variable is a dummy variable: coded 1-positive and 0 negative.
+
+Output: Categorical or binary /  Probabilistic output.
+
+### Sigmoid function
+
+$\theta(x)=\frac{e^x}{1+e^x}$  But why this function? consider log odds. 
+$$
+L=\ln \frac{p(y=+1|x)}{p(y=-1|x)},\quad p(y=+1|x)+p(y=-1|x)=0
+$$
+When L>>0, trust y=+1; L<<0, trust y=-1; L=0, either
+
+### MLE in logistic regression
+
+Connect with Linear Function,
+
+The posterior probability:
+$$
+P(y_i=+1|x_i,w)=\theta(x_i^Tw)=\frac{e^{x_i^Tw}}{1+e^{x_i^Tw}}\\P(y_i=-1|x_i,w)=1-\theta(x_i^Tw)=\theta(-x_i^Tw)
+$$
+From (6), we have: $P(y_i|x_i,w)=\theta(y_ix_i^Tw)$.
+
+Then the composite probability:（independent events... so product the probability)
+$$
+p(y1,...y_n|x_1,...x_n,w)=\prod_{i=1}^np(y_i|x_i,w)\\=\prod_{i=1}^n\theta(y_ix_i^Tw)
+$$
+Given: $\theta(x)=\frac{e^x}{1+e^x}$ , so $\frac{1}{\theta(x)}=1+e^{-x}, \theta(x)'=\theta(x)(1-\theta(x))$, 
+$$
+w_{ML}=\arg\max_w\sum_{i=1}^n\ln \theta(y_ix_i^Tw)=\arg\max_w L\\
+\nabla_wL=\sum_{i=0}^n(1-\theta(y_ix_i^Tw))y_ix_i^T
+$$
+Use Newton- Raphson method to look for w
 
 ## ANN
 
 Artificial Neural Networks (ANNs) are physically cellular systems, which can acquire, store and utilize experiential knowledge.
 
+Characteristic:
+
+- Architecture
+
+  Feedforward [**output won't give to input**]
+
+  Recurrent
+
+- Learning paradigm
+
+   Supervised[MLP, RBFN] Particularly useful for feedforward networks. **priori known desired outpu**t
+
+  Unsupervised[KSON, Hopfield]**No priori known desired output.**
+
+  Reinforcement Learning: Network’s connection **weights are adjusted** according to a qualitative and not quantitative feedback information
+
+  **Training algorithm and pictures** (set2 11 14 17)
+
+- Activation functions
+
+  continuous, differentiable. There is one example: $sigmoid(x)=\frac{1}{1+e^{-x}}$
+
 ### Perceptron
 
-#### Activation function
+Mainly designed to **classify linearly separable** (exists a hyperplanar multidimensional decision boundary that classifies the patterns into two classes.) patterns, **supervised learning** 
 
-continuous, differentiable. There is one example:
-$$
-sigmoid(x)=\frac{1}{1+e^{-x}}
-$$
+#### Perceptron Convergence Theorem
+
+There exists a set of weights for which the training of the Perceptron will **converge in a finite time** and the training patterns are correctly classified. The proof of the coverage of perceptron algorithm: A1q1
 
 #### Architecture
 
-![1](https://i.postimg.cc/hvPYPcR7/1.jpg)
+<img src="https://i.postimg.cc/hvPYPcR7/1.jpg" alt="1" style="zoom:50%;" />
 
 #### Training Algorithm
 
@@ -80,7 +161,7 @@ $$
 
 2. Choose an input-output pattern$ (x^{(k)},t^{(k)})$ from the training data.
 
-3. Compute the network’s actual output $c^{(k)}=f(\sum^I_{i=1}w_ix^{(k)}_i+\theta)$
+3. Compute the network’s actual output $o^{(k)}=f(\sum^I_{i=1}w_ix^{(k)}_i+\theta)$
 
 4. Adjust the weights and bias according to the perceptron learning rule: $∆w_i = η[t^{(k)} − o^{(k)}]$, and $∆θ = −η[t^{(k)} − o^{(k)}]$. where $η ∈ [0, 1]$ is the perceptron’s learning rule. If f is the signum function, this becomes equivalent to
    $$
@@ -103,7 +184,7 @@ $$
 
 6. If the weights (and bias) reached a steady-state  $(∆wi ≈ 0)$ through the whole epoch, then stop the learning; otherwise go through one more epoch starting from Step 2.
 
-The process of iterative optimization of an algorithm must be completed in a limited number of steps. The proof of the coverage of perceptron algorithm: A1q1
+**The example on the slide!**
 
 ### Multi-Layer Perceptrons (MLPs)
 
