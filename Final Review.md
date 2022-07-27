@@ -126,7 +126,7 @@ Characteristic:
 
    Supervised[MLP, RBFN] Particularly useful for feedforward networks. **priori known desired outpu**t
 
-  Unsupervised[KSON, Hopfield]**No priori known desired output.**
+  Unsupervised[KSON, HNN]**No priori known desired output.**
 
   Reinforcement Learning: Network’s connection **weights are adjusted** according to a qualitative and not quantitative feedback information
 
@@ -188,6 +188,222 @@ $$
 
 ### Multi-Layer Perceptrons (MLPs)
 
-![2](https://i.postimg.cc/t4np5kMT/2.jpg)
+The perceptron **lacks** the important capability of **recognizing patterns belonging to non-separable linear spaces**.
 
-计算卷积sizehttps://zhuanlan.zhihu.com/p/205453986
+MLP solves a wide range of complex problems.
+
+<img src="https://i.postimg.cc/t4np5kMT/2.jpg" alt="2" style="zoom:67%;" />
+
+#### Backpropagation Learning Algorithm
+
+**Online learning** (also called *incremental learning*): The weight changes made at a given stage depend specifically **only** on the (current) example being presented and possibly on the current state of the model. It is the natural procedure for **time-varying** rules where the examples might not be available at all at once.
+
+**Offline learning**: the weight changes **depending on the whole (training) dataset**, defining a global cost function. The examples are **used repeatedly** until minimization of this cost function is achieved.
+
+the derivation: https://www.cnblogs.com/jsfantasy/p/12177275.html
+
+https://blog.csdn.net/z_feng12489/article/details/89187037
+
+#### Learning Algorithm
+
+P19 
+
+#### Momentum
+
+learning parameter η small, very slow convergence rate of the algorithm; large, lead to unwanted oscillations in the weight space.
+$$
+∆w(l)(t+1)=−η\frac{∂E_c(t)}{\partial w^l} +γ∆w^l(t)
+$$
+example of MLP on slides
+
+more samples, a proper number of hidden layers ---- better output.
+
+#### **MLP application**
+
+Signal processing, Weather forecasting, Pattern recognition, Signal compression, Financial market prediction
+
+#### Limitation
+
+The gradient descent-based algorithm used to update the network weights may **never converge to the global minima**, particularly in the case of highly nonlinear behaviour of the system being approximated by the network
+
+Using optimization techniques such as those based on: Genetic algorithms, Simulated annealing.
+
+### Radial Basis Function Network
+
+**----feedforward neural networks architecture**.
+
+an input layer, a single hidden layer with radial activation function and an output layer.
+
+#### Topology
+
+<img src="https://i.postimg.cc/4xbghFK8/657s31.jpg" style="zoom:50%;" />
+
+hidden layer; **nonlinear** transformations, **symmetrical** (typical transfer functions for hidden functions are Gaussian curves).
+
+between the hidden and output layers: **linear** transformations
+
+weights between the input layer and hidden layer: equal to unity.
+
+（input spaces, cast nonlinearly into high-dimensional domains, are more likely to be linearly separable than those cast into low-dimensional ones.）
+
+RBF function: x: input, $v_i$ the center of radial function, $\sigma_i$ width parameter
+$$
+g_i(x)=r_i\frac{||x-v_i||}{\sigma_i}
+$$
+Gaussian kernel function and logistic function are possible RBF function
+$$
+o_i(x)=\sum_{i=1}^nw_{ij}g_i(x),j=1,...,r
+$$
+
+#### Learning Algorithm
+
+Step 1: Train the RBF layer to **get the adaptation of centers** and scaling parameters using **unsupervised training.**
+
+use clustering: K-means, MLE, Self-organizing map method.
+
+Step 2: Adapt the weights of the output layer using **supervised training.**
+
+using Least-squares method, Gradient method to update the weight, use the inverse or pseudo-inverse method to calculate the weight matrix.
+
+Here use Gaussian kernel as the radial basis function, D = GW, where D is the desired output of the training data.
+
+If $ G^{-1}$ exists, $W= G^{-1}D$. 
+
+But when G is ill-conditioned use: $W=G^+D$, where $G^+=(G^TG)^{-1}G^T$
+
+**Choose a proper width**
+
+Too small: can't provide a good interpolation between sample data. Too large:  lose a lot of information when the ranges of the radial functions are further away from the original range of the function.
+
+#### Advantages/Disadvantages
+
+pro: train **faster** than a MLP, the hidden layer is **easier to interpret** than the hidden layer in an MLP.
+
+Con: training is finished and it is being **used it is slower** than a MLP, **unsupervised learning stage is not an easy task**,have an undesirably **high number of hidden nodes** (but the dimension of the space can be reduced by careful planning of the network.)
+
+#### Application
+
+have universal approximation capabilities, good local structures and efficient training algorithms
+
+- Nonlinear mapping of complex processes and for solving a wide range of classification problems.
+- control systems, audio and video signals processing, and pattern recognition.
+- chaotic time series prediction, with particular application to weather and power load forecasting.
+
+### Kohonen’s Self-Organizing Network
+
+**----unsupervised learning networks**
+
+#### Topology
+
+Competitive learning: the nodes distribute themselves across the input space to **recognize groups of similar input** vectors, two input vectors with similar pattern characteristics excite **two physically close layer nodes**. The **output nodes compete among themselves** to be fired one at a time in response to a particular input vector.
+
+<img src="https://i.postimg.cc/6qZpX4kP/657s32.jpg" style="zoom:50%;" />
+
+#### Learning Algorithm
+
+slide p88, and example
+
+$N_c$: neighbourhood around the winning output candidate. decreases at every iteration until convergence occurs.
+
+Step1: Initial all weights, learning rate, $N_c$, choose pattern x from the input
+
+Step2: Select winning unit c, let $I=||x-w_c||=\min_{ij}||x-w_{ij}||$ minimized
+
+Step3: Update the weights, and the learning rate and the neighbourhood are decreased at every iteration
+
+Step4: Continue until each output reaches a threshold of sensitivity to a portion of the input space.
+
+Update the weight of neighbour: Closer neighbours are rewarded more than the ones that are farther slide p107
+
+#### Application
+
+**Clustering applications** such as Speech recognition, Vector coding, Robotics applications, and Texture segmentation.
+
+### Hopfield Network
+
+**----recurrent topology**
+
+#### Topology
+
+Associative Memory Concept: 
+
+- **recognize newly presented patterns using an already stored** ’complete’ version of that pattern.
+- energy function that keeps decreasing until the system has reached stable status.
+
+**Processing units** configured in **one single layer** (besides the input and the output layers) with symmetrical synaptic connections
+
+<img src="https://i.postimg.cc/dVYtGVyR/657s33.jpg" style="zoom:67%;" />
+$$
+o_i=sign(\sum_{j=1}^nw_{ij}o_j-\theta_i)
+$$
+Energy function: **keeps decreasing until reaches stable status**.
+$$
+E=-1/2\sum\sum_{i\not=j}w_{ij}o_io_j+\sum o_i\theta_i\\\Delta E=-1/2\Delta o_i\sum_{i\not=j}w_{ij}o_j-\theta_i
+$$
+
+#### Hebbian Learning
+
+When two units are simultaneously activated, their interconnection weight increase becomes proportional to the product of their two activities. https://zh.wikipedia.org/wiki/%E8%B5%AB%E5%B8%83%E7%90%86%E8%AE%BA
+$$
+w_{ij}=\left\{
+\begin{array}
+1/n\sum_{k=1}^qp_{kj}p_{ki}&&{i\not=j}\\
+0&&{i=j}\\
+\end{array} \right.
+$$
+slide p125, and example
+
+HNN has the ability to remember the fundamental memory and its complement.
+
+#### Application
+
+- Information retrieval and for pattern and speech recognition, 
+- Optimization problems,
+- Combinatorial optimization problems such as the traveling salesman problem.
+
+Limitation:
+
+Limited stable-state storage capacity of the network
+Many studies have been carried out recently to increase the capacity of the network without increasing much the number of the processing units
+
+## Introduction to Deep Learning
+
+Why Do We Need Deep Connectionist Models?
+
+- Shallow models require a larger number of units, difficult to train (over-fitting is a major issue).
+- Deep models lead to hierarchical representations, with varying levels of abstraction.
+
+Why Weren’t Deep Models Popular Before? ----difficult to train
+
+Gradient flow problems--Many heuristics and schemes
+Need large datasets--immediate access to large datasets
+Need large computer and memory resources--easy access to powerful computing power and open-source software libraries
+
+### Convolutional Neural Networks
+
+Calculate the size of core: https://zhuanlan.zhihu.com/p/205453986
+
+### Recurrent Neural Networks
+
+Assume some sort of **dependency between data** samples.
+
+### Autoencoders
+
+**---unsupervised models**
+
+Map the input onto itself with the restriction that one of the hidden layers(bottleneck), has a **lower dimension than the input**.
+
+Used for **dimensionality reduction**, learn **non-linear mappings** from input to encoding space.
+
+### Natural Language Processing
+
+#### Application
+
+Detect new words, Language learning, Machine translation, NL interface, Information retrieval
+
+#### Word Representation
+
+One-hot encoding, Word occurrence (Term frequency), Term frequency-Inverse Document Frequency(TF-IDF), Word embedding, Latent Semantic Analysis, Word2Vec(a software package for representing words as vectors, containing two distinct models:CBoW, Skip-Gram), GloVe
+
+Weaknesses of Word Embedding: Very vulnerable, and not a robust concept; Can take a long time to train; Non-uniform results;  Hard to understand and visualize
+
