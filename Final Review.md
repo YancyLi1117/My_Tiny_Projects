@@ -381,11 +381,46 @@ Need large computer and memory resources--easy access to powerful computing powe
 
 ### Convolutional Neural Networks
 
-Calculate the size of core: https://zhuanlan.zhihu.com/p/205453986
+Contain at least 1 convolutional layer, Pooling layers, Fully-connected layers, Element-wise activation layers
+
+<img src="https://i.postimg.cc/sgzhM8PK/657s43.jpg" style="zoom:50%;" />
+
+#### Convolutional layers
+
+differ from fully-connected layers in 2 ways:
+
+- **Local connectivity**:  connect only to part of the input 
+- **Parameter sharing**:  has the same parameters and represents a single convolutional unit.
+
+Convolution Operator: $z(t)=(w\star x)(t)=\sum_{-\infty}^\infty x(t+\tau)w(\tau)$
+
+Convolutional units go by many names: filters, kernels, and conv units. Hyperparameters: Filter size, Number of filters in a layer, Stride, Padding. Calculate the size of outputs: https://zhuanlan.zhihu.com/p/205453986
+
+CNNs can be 1D, 2D, or 3D, depending on the type of input. 
+
+#### Pooling Layers
+
+Added after convolution layers, to **reduce the size** of the feature maps outputted by convolution layers, include max pooling and average pooling
+
+Pooling layers don’t have learned parameters, build needs hyperparameters. Pooling size (larger pooling size, smaller output shape), Stride (Larger strides, smaller shapes)
+
+Pros: Add some translation invariance to CNNs,  allow some tolerance, edge can appear in the feature map without affecting the classification result.
+
+Cons: output space has a lower dimension, information is lost; not fit within the ‘end to end’ learning paradigm of deep learning.
+
+Application: AlexNet, LeNet, VGG, GoogleLeNet, ResNet
 
 ### Recurrent Neural Networks
 
 Assume some sort of **dependency between data** samples.
+
+<img src="https://i.postimg.cc/kGtnsJC8/657s42.jpg" style="zoom:40%;" />
+$$
+h_y=\sigma_h(W_{xh}\centerdot x_t+W_{hh}\centerdot h_{t-1}+b_h)\\o_t=\sigma_o(W_{ho}\centerdot h_t+b_o)
+$$
+$\sigma$: activation functions; b: bias, learning the parameters W and b using backpropagation through time (BPTT).
+
+Due to vanishing and exploding gradient, many variants of RNNs have developed, such as LSTM
 
 ### Autoencoders
 
@@ -394,6 +429,8 @@ Assume some sort of **dependency between data** samples.
 Map the input onto itself with the restriction that one of the hidden layers(bottleneck), has a **lower dimension than the input**.
 
 Used for **dimensionality reduction**, learn **non-linear mappings** from input to encoding space.
+
+<img src="https://i.postimg.cc/C15MZC6c/657s41.jpg" style="zoom:40%;" />
 
 ### Natural Language Processing
 
@@ -407,3 +444,4 @@ One-hot encoding, Word occurrence (Term frequency), Term frequency-Inverse Docum
 
 Weaknesses of Word Embedding: Very vulnerable, and not a robust concept; Can take a long time to train; Non-uniform results;  Hard to understand and visualize
 
+## **Introduction to Soft Computing and Intelligent Systems**
