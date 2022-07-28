@@ -445,3 +445,92 @@ One-hot encoding, Word occurrence (Term frequency), Term frequency-Inverse Docum
 Weaknesses of Word Embedding: Very vulnerable, and not a robust concept; Can take a long time to train; Non-uniform results;  Hard to understand and visualize
 
 ## **Introduction to Soft Computing and Intelligent Systems**
+
+Knowledge-based system: **make perceptions** and new **inferences or decisions** using its reasoning mechanism
+
+Need two types of knowledge: **knowledge of the problem**, knowledge regarding methods for **solving the problem**
+
+Ways of representing and processing knowledge: Logic, Semantic Networks, Frames, Production Systems, and Fuzzy Logic.
+
+Two types of logic: **crisp** (**binary**,  deals with statements called ”propositions”) and **fuzzy** (multivalued).
+
+ In logic, knowledge is represented by **propositions**, connected by logical connectives such as AND, OR, NOT, EQUALS, IMPLIES.
+
+The typical end objective of knowledge processing is to **make inferences**. 
+
+The inference process used in a rule-based system is **deductive inference**  (Forward Chaining, Backward Chaining)
+
+Rules of inference:
+
+- Conjuction: $(A,B)\Rightarrow A\wedge B$
+- Modus Ponens: $A\wedge(A\rightarrow B)\Rightarrow B$
+- Modus Tollens: $\overline{B}\wedge(A\rightarrow B)\Rightarrow \overline{A}$
+- Hypothetical Syllogism:$(A\rightarrow B)\wedge(B\rightarrow C)\Rightarrow A\rightarrow C$ 
+
+Soft computing: an important **branch of intelligent and knowledge-based system**s, Fuzzy logic, probability theory, neural networks, and genetic algorithms are cooperatively used in soft computing
+
+Fuzzy logic (FL) allows for a **realistic extension of binary, crisp logic to qualitative, subjective, and approximate situations**
+
+GA: **derivative-free** optimization techniques, in the development of an optimal and **self-improving intelligent machine.**
+
+<img src="https://i.postimg.cc/d0hCP57w/657s51.jpg" style="zoom:50%;" />
+
+Characteristics: based on **multiple searching points or solution candidates**; use **evolutionary operations**; based on **probabilistic operations**
+
+### Fuzzy logic 
+
+Applications of Fuzzy Logic:
+
+<img src="https://i.postimg.cc/pVsqH6rn/657s61.jpg" style="zoom:50%;" />
+
+#### Fuzzy set
+
+X: universe of discourse. represented by a membership function, values in the interval [0, 1].
+
+**A crisp set is a special case of a fuzzy set** where the membership function can take only two values, 0 and 1.
+
+<img src="https://i.postimg.cc/yYQfKrfb/657s62.jpg" style="zoom:40%;" />
+
+universe of discourse: maybe discrete or continuous
+
+#### Member functions
+
+Triangular and trapezoidal membership functions:  Linear ⇒ Computationally inexpensive. Non-differentiable ⇒ May not be suitable to be used with gradient-descent optimization algorithms.
+
+Gaussian and Bell membership functions: Differentiable ⇒ Suitable to be used with gradient-descent optimization algorithms. Nonlinear ⇒ Computationally expensive.
+
+##### Triangular
+
+3 parameters {a, b, c}, a < b < c.
+
+<img src="https://i.postimg.cc/Ghbbs9xy/657s63.jpg" style="zoom:50%;" />
+
+##### Trapezoidal
+
+4 parameters {a, b, c, d}, a < b < c < d.
+
+<img src="https://i.postimg.cc/9QVJGRxy/657s64.jpg" style="zoom:50%;" />
+
+##### Gaussian
+
+2 parameters {σ,c}
+
+<img src="https://i.postimg.cc/7LJGhXg9/657s65.jpg" style="zoom:50%;" />
+
+##### Generalized Bell
+
+3 parameters {a, b, c}, a: the shape(smaller a, thinner), b: the top area(largerb, flatter), c: the location
+
+<img src="https://i.postimg.cc/K8DFNTmb/657s66.jpg" style="zoom:50%;" />
+
+#### Fuzzy Logic Operations
+
+- Complement; μA′(x)=1−μA(x), x∈X
+- Union: μ*A*∪*B*(x) = max(μ*A*(*x*),μ*B*(*x*)),∀*x* ∈ X
+- Intersection: μ*A*∩*B*(x) = min(μ*A*(*x*),μ*B*(*x*)),∀*x* ∈ X
+
+##### Generalized Fuzzy Complement
+
+Boundary conditions, Non-increasing,Involutive
+
+Look at the 457b note---
