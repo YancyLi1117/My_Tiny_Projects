@@ -10,7 +10,7 @@
 
 Artificial Intelligence: Algorithms enabled by constraints, exposed by representations that support models, and targeted at thinking, perception, and action.
 
-Intelligent systems: artificial entities involving a mix of **software and hardware** which have a capacity to acquire and apply knowledge in an ”intelligent” manner and have the capabilities of perception, reasoning, learning, and making inferences (or, decisions) from incomplete information. **Intelligent systems use AI and ML.**
+Intelligent systems: artificial entities involving a mix of **software and hardware** which have a capacity to acquire and apply knowledge in an ”intelligent” manner and **have the capabilities of perception, reasoning, learning, and making inferences** (or, decisions) from incomplete information. **Intelligent systems use AI and ML.**
 
 Feature of the intelligent system: the generation of **outputs**, based on some **inputs** and the nature of the system itself. 
 
@@ -364,7 +364,7 @@ HNN has the ability to remember the fundamental memory and its complement.
 Limitation:
 
 Limited stable-state storage capacity of the network
-Many studies have been carried out recently to increase the capacity of the network without increasing much the number of the processing units
+Many studies have been carried out recently to increase the capacity of the network without increasing the number of the processing units
 
 ## Introduction to Deep Learning
 
