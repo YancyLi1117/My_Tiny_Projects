@@ -1,7 +1,6 @@
-# My_Tiny_Projects
+# ML Notebook
 hello!
-i am a rookie programmer,
+I am a rookie programmer,
 this is my review of ML and DM,
 hope to make progress with you~
 
-test
